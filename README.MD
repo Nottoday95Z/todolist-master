@@ -11,6 +11,8 @@
 ## Install
 ```sh
 repository https://github.com/Nottoday95Z/todolist-master
+```
+```sh
 pip install -r requirements.txt
 ```
 
