@@ -115,15 +115,14 @@ class Command(BaseCommand):
                              f"===================\n"
             for goal in goals:
                 goals_str += "\n🔹 " + f"{goal.title}" \
-                                      f"\nприоритет: {goal.Priority.choices[goal.priority - 1][1]}\n" \
-                                      f"дедлайн: {goal.due_date}\n"
+                            f"\nприоритет: {goal.Priority.choices[goal.priority - 1][1]}\n" \
+                            f"дедлайн: {goal.due_date}\n"
         else:
             goals_str: str = f"✅ У Вас нет целей!"
 
         tg_client.send_message(chat_id=message.chat.id, text=goals_str)
 
-    def get_goal_categories(self, message: Message, tg_user: TgUser, tg_client: TgClient) -> Optional[
-        List[GoalCategory]]:
+    def get_goal_categories(self, message: Message, tg_user: TgUser, tg_client: TgClient) -> Optional[List[GoalCategory]]:
         """
         Получение всех категорий пользователя в Telegram.
         Если категорий у пользователя нет, то отправить сообщение, что категорий нет.
@@ -135,7 +134,7 @@ class Command(BaseCommand):
             goal_categories_str: str = f"🏷 Выберите категорию:\n" \
                                        f"=====================\n" \
                                        f"\n🔹 " + "\n".join(list_goal_categories) + "\n" \
-                                                                                   f"\n(для отмены действия введите команду /cancel)\n"
+                                       f"\n(для отмены действия введите команду /cancel)\n"
         else:
             goal_categories_str: str = f"У Вас нет ни одной категории!"
         tg_client.send_message(chat_id=message.chat.id, text=goal_categories_str)
