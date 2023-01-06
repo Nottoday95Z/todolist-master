@@ -27,4 +27,3 @@ class TgClient:
         response = requests.get(url, params={"chat_id": chat_id, "text": text})
         print(response.json())
         return dc.SEND_MESSAGE_RESPONSE_SCHEMA.load(response.json())
-
