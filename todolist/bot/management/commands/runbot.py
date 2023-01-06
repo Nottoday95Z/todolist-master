@@ -111,14 +111,14 @@ class Command(BaseCommand):
         goals: Optional[List[Goal]] = Goal.objects.filter(
             category__board__participants__user__id=tg_user.user_id).exclude(status=Goal.Status.archived)
         if goals:
-            goals_str: str = f"📌 Ваш список целей:\n" \
+            goals_str: str = f" Ваш список целей:\n" \
                              f"===================\n"
             for goal in goals:
-                goals_str += "\n🔹 " + f"{goal.title}" \
+                goals_str += "\n " + f"{goal.title}" \
                             f"\nприоритет: {goal.Priority.choices[goal.priority - 1][1]}\n" \
                             f"дедлайн: {goal.due_date}\n"
         else:
-            goals_str: str = f"✅ У Вас нет целей!"
+            goals_str: str = f" У Вас нет целей!"
 
         tg_client.send_message(chat_id=message.chat.id, text=goals_str)
 
@@ -133,7 +133,7 @@ class Command(BaseCommand):
             list_goal_categories: list = [goal_category.title for goal_category in goal_categories]
             goal_categories_str: str = f"🏷 Выберите категорию:\n" \
                                        f"=====================\n" \
-                                       f"\n🔹 " + "\n".join(list_goal_categories) + "\n" \
+                                       f"\n " + "\n".join(list_goal_categories) + "\n" \
                                        f"\n(для отмены действия введите команду /cancel)\n"
         else:
             goal_categories_str: str = f"У Вас нет ни одной категории!"
@@ -153,7 +153,7 @@ class Command(BaseCommand):
                     continue
 
                 if item.message.text.strip().lower() == "/cancel":
-                    tg_client.send_message(chat_id=item.message.chat.id, text="⛔ Действие отменено!")
+                    tg_client.send_message(chat_id=item.message.chat.id, text=" Действие отменено!")
                     return None
 
                 elif item.message.text.strip().lower() in [goal_category.title for goal_category in goal_categories]:
@@ -164,7 +164,7 @@ class Command(BaseCommand):
                     tg_client.send_message(
                         chat_id=item.message.chat.id,
                         text="Такой категории нет, повторите ввод.\n\n"
-                             "(для отмены действия введите команду /cancel)")
+                             "(для отмены действия  /cancel)")
 
     def create_goal(self, tg_client: TgClient, tg_user: TgUser, goal_category: GoalCategory) -> None:
         """
@@ -178,7 +178,7 @@ class Command(BaseCommand):
                     continue
 
                 if item.message.text.strip().lower() == "/cancel":
-                    tg_client.send_message(chat_id=item.message.chat.id, text="⛔ Cоздание цели прервано!")
+                    tg_client.send_message(chat_id=item.message.chat.id, text=" Cоздание цели отменено! ")
                     return
                 else:
                     due_date = datetime.date.today() + datetime.timedelta(days=14)
@@ -190,5 +190,5 @@ class Command(BaseCommand):
                         due_date=due_date.strftime("%Y-%m-%d")
                     )
                     tg_client.send_message(
-                        chat_id=item.message.chat.id, text=f"Цель **{goal.title}** успешно создана")
+                        chat_id=item.message.chat.id, text=f"Цель **{goal.title}** создана")
                     return
