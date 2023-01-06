@@ -15,6 +15,7 @@ class GoalCategoryCreateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def validate_board(self, value):
+        """проверка роли пользователя и его активные дески"""
         if value.is_deleted:
             raise serializers.ValidationError("Проект был удален! Никакие действия не возможны!")
         allow = BoardParticipant.objects.filter(
@@ -37,6 +38,7 @@ class GoalCategorySerializer(serializers.ModelSerializer):
 
 
 class GoalCreateSerializer(serializers.ModelSerializer):
+    """валидность пользователя , наличие категорий"""
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:

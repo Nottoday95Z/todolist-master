@@ -8,10 +8,12 @@ USER_MODEL = get_user_model()
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    """Регистрация пользователя с подтверждением пароля"""
     password = serializers.CharField(write_only=True)
     password_repeat = serializers.CharField(write_only=True)
 
     def create(self, validated_data) -> USER_MODEL:
+        """Создание и хэш пароля"""
         password = validated_data.get('password')
         password_repeat = validated_data.pop('password_repeat')
 
@@ -29,6 +31,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.ModelSerializer):
+    """Создание Юзера, если введение данные правильны"""
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True, write_only=True)
 
@@ -54,6 +57,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class UpdatePasswordSerializer(serializers.Serializer):
+    """Обновление пароля"""
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     old_password = serializers.CharField(required=True, write_only=True)
     new_password = serializers.CharField(required=True, write_only=True)

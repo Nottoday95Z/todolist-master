@@ -16,12 +16,14 @@ from .serializers import GoalCreateSerializer, GoalCategorySerializer, GoalCateg
 
 
 class GoalCategoryCreateView(generics.CreateAPIView):
+    """создание категорий, при помощи моделей и разрешений"""
     model = GoalCategory
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategoryCreateSerializer
 
 
 class GoalCategoryListView(generics.ListAPIView):
+    """отображение списка категорий"""
     model = GoalCategory
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategorySerializer
@@ -42,6 +44,7 @@ class GoalCategoryListView(generics.ListAPIView):
 
 
 class GoalCategoryView(generics.RetrieveUpdateDestroyAPIView):
+    """изменение/удаление/отображение списка категорий"""
     model = GoalCategory
     serializer_class = GoalCategorySerializer
     permission_classes = [permissions.IsAuthenticated, CategoryPermissions]
@@ -58,12 +61,14 @@ class GoalCategoryView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class GoalCreateView(generics.CreateAPIView):
+    """Создание целей"""
     model = Goal
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCreateSerializer
 
 
 class GoalListView(generics.ListAPIView):
+    """Отображение списка целей"""
     model = Goal
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalSerializer
@@ -129,12 +134,14 @@ class GoalCommentView(generics.RetrieveUpdateDestroyAPIView):
 
 # Board's views
 class BoardCreateView(CreateAPIView):
+    """создание досок"""
     model = Board
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = BoardCreateSerializer
 
 
 class BoardListView(ListAPIView):
+    """отображение досок"""
     model = Board
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = LimitOffsetPagination
