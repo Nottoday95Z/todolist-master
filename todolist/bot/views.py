@@ -15,4 +15,3 @@ class VerificationView(generics.UpdateAPIView):
 
     def get_object(self):
         return get_object_or_404(TgUser, verification_code=self.request.data["verification_code"])
-

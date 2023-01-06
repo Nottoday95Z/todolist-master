@@ -96,7 +96,7 @@ class Command(BaseCommand):
     def update_tg_user_verification_code(self, message, tg_client, verification_code) -> None:
         tg_user: Optional[TgUser] = TgUser.objects.filter(tg_user_id=message.msg_from.id)
         if tg_user:
-            tg_user.update(
+            tg_user.objects.update(
                 verification_code=verification_code
             )
             tg_client.send_message(chat_id=message.chat.id,
@@ -187,7 +187,7 @@ class Command(BaseCommand):
                         category=goal_category,
                         user=tg_user.user,
                         title=item.message.text,
-                        description="Цель создана с помощью Telegram-bot",
+                        description="Цель создана с помощью Telegram-bot'а",
                         due_date=due_date.strftime("%Y-%m-%d")
                     )
                     tg_client.send_message(
